@@ -10,8 +10,7 @@ const commands = [{
 const rest = new REST({ version: '9' }).setToken(token);
 
 const clientId = "880520870995574834";
-//const guildId = "272166101025161227"; // Boar server id
-const guildId = "880203413751742484"; // Boar server id
+const guildId = "272166101025161227"; // Boar server id
 
 (async () => {
   try {
