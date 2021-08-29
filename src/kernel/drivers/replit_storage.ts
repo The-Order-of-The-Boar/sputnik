@@ -4,24 +4,23 @@ import {Storage} from "./driver";
 import {min} from "../../utils";
 
 // extern
-import * as Replit from "@replit/database";
-import { isThisTypeNode } from "typescript";
+const ReplitClient = require("@replit/database");
 
 
 
 export class ReplitStorage implements Storage
 {
     data: Map<string, any> = new Map<string, any>();
-    database_connection: Replit.Client;
+    database_connection: any;
     modified: boolean = false;
     interval_id: NodeJS.Timer;
 
     async init()
     {
-        this.database_connection = new Replit.Client();
+        this.database_connection = new ReplitClient();
         await this.read_data();
 
-        this.interval_id = setInterval(this.dump, 10000); // TODO: fazer com que o intervalo seja configurável
+        this.interval_id = setInterval(this.interval_dump, 10000); // TODO: fazer com que o intervalo seja configurável
     }
 
     async read_data()
@@ -40,6 +39,8 @@ export class ReplitStorage implements Storage
         for (let key in content_json)
             this.data.set(key, content_json[key]);
     }
+
+    interval_dump = () => { this.dump(); }
 
     async dump()
     {
@@ -65,8 +66,9 @@ export class ReplitStorage implements Storage
         return JSON.stringify(this.data);
     }
 
-    async destruct()
+    async destroy()
     {
         clearInterval(this.interval_id);
+        this.dump();
     }
 }

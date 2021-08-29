@@ -2,7 +2,7 @@
 interface Driver
 {
     init(): void;
-    destruct(): void;
+    destroy(): void;
 }
 
 
