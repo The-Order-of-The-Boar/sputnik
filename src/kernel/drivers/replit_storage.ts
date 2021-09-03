@@ -1,7 +1,7 @@
 
 // local
 import {Storage} from "./driver";
-import {min} from "../../utils";
+import {min, Config} from "../../utils";
 
 // extern
 const ReplitClient = require("@replit/database");
@@ -21,12 +21,12 @@ export class Driver implements Storage
         this.modified = false;
     }
 
-    async init()
+    async init(config: Config)
     {
         this.database_connection = new ReplitClient();
         await this.read_data();
 
-        this.interval_id = setInterval(this.interval_dump, 10000); // TODO: fazer com que o intervalo seja configurável
+        this.interval_id = setInterval(this.interval_dump, config.get("storage_dump_interval"));
     }
 
     async read_data()

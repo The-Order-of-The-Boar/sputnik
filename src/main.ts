@@ -59,7 +59,7 @@ class Kernel
         let config = new Config();
 
         config.set("storage_driver", "./kernel/drivers/filesystem_storage");
-        config.set("storage_dump_delay", 10000);
+        config.set("storage_dump_interval", 10000);
 
         return config;
     }

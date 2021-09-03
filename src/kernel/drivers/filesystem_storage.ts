@@ -25,7 +25,7 @@ export class Driver implements Storage
     {
         await this.read_data();
 
-        this.interval_id = setInterval(this.interval_dump, config.get("storage_dump_delay")); // TODO: fazer com que o intervalo seja configurável
+        this.interval_id = setInterval(this.interval_dump, config.get("storage_dump_interval"));
     }
 
     async read_data()
