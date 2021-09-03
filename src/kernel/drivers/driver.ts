@@ -1,14 +1,16 @@
 
 interface Driver
 {
-    init(): void;
-    destroy(): void;
+    init(): Promise<void>;
+    destroy(): Promise<void>;
 }
 
 
 export interface Storage extends Driver
 {
-    data: Map<string, any>;
-    dump(): void;
+    dump(): Promise<void>;
     get_dump(): string;
+
+    get(key: string): any;
+    set(key: string, value: any): void;
 }

@@ -8,12 +8,18 @@ const ReplitClient = require("@replit/database");
 
 
 
-export class ReplitStorage implements Storage
+export class Driver implements Storage
 {
-    data: Map<string, any> = new Map<string, any>();
-    database_connection: any;
-    modified: boolean = false;
-    interval_id: NodeJS.Timer;
+    private data: Map<string, any>;
+    private database_connection: any;
+    private modified: boolean;
+    private interval_id: NodeJS.Timer;
+
+    constructor()
+    {
+        this.data = new Map<string, any>();
+        this.modified = false;
+    }
 
     async init()
     {
@@ -63,8 +69,23 @@ export class ReplitStorage implements Storage
 
     get_dump(): string
     {
+        // FIXME: isso não funciona
         return JSON.stringify(this.data);
     }
+
+
+    get(key: string): any
+    {
+        this.modified = true;
+        return this.data.get(key);
+    }
+
+    set(key: string, value: any): void
+    {
+        this.modified = true;
+        this.data.set(key, value);
+    }
+
 
     async destroy()
     {
