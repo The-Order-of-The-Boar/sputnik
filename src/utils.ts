@@ -43,6 +43,6 @@ export class Config
 
     dump(): string
     {
-        return JSON.stringify(this.data);
+        return JSON.stringify(this.data, null, 4);
     }
 }
