@@ -5,7 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only ./src/main.ts",
-    "run": "tsc && node ./dist/main.js"
+    "prod": "tsc && node ./dist/main.js"
   },
   "keywords": [],
   "author": "Boar Comrades",
