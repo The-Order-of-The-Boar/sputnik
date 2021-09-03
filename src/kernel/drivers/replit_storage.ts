@@ -10,14 +10,14 @@ const ReplitClient = require("@replit/database");
 
 export class Driver implements Storage
 {
-    private data: Map<string, any>;
+    private data: {[key: string]: any};
     private database_connection: any;
     private modified: boolean;
     private interval_id: NodeJS.Timer;
 
     constructor()
     {
-        this.data = new Map<string, any>();
+        this.data = {};
         this.modified = false;
     }
 
@@ -43,7 +43,7 @@ export class Driver implements Storage
 
         const content_json = JSON.parse(content_text);
         for (let key in content_json)
-            this.data.set(key, content_json[key]);
+            this.data[key] = content_json[key];
     }
 
     interval_dump = () => { this.dump(); }
@@ -69,7 +69,6 @@ export class Driver implements Storage
 
     get_dump(): string
     {
-        // FIXME: isso não funciona
         return JSON.stringify(this.data);
     }
 
@@ -77,13 +76,13 @@ export class Driver implements Storage
     get(key: string): any
     {
         this.modified = true;
-        return this.data.get(key);
+        return this.data[key];
     }
 
     set(key: string, value: any): void
     {
         this.modified = true;
-        this.data.set(key, value);
+        this.data[key] = value;
     }
 
 

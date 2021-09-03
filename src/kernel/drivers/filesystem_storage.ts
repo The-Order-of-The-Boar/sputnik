@@ -4,6 +4,7 @@ import {Storage} from "./driver";
 
 // builtin
 import {promises as fs} from "fs";
+import {file_exists, Config} from "../../utils";
 
 
 
@@ -20,25 +21,17 @@ export class Driver implements Storage
         this.modified = false;
     }
 
-    async init()
+    async init(config: Config)
     {
         await this.read_data();
 
-        this.interval_id = setInterval(this.interval_dump, 10000); // TODO: fazer com que o intervalo seja configurável
+        this.interval_id = setInterval(this.interval_dump, config.get("storage_dump_delay")); // TODO: fazer com que o intervalo seja configurável
     }
 
     async read_data()
     {
-
-        try
-        {
-            if (!(await fs.stat("./filesystem_storage")).isFile())
-                return;
-        }
-        catch(error)
-        {
+        if (!(await file_exists("./filesystem_storage")))
             return;
-        }
 
         const file_content = JSON.parse((await fs.readFile("./filesystem_storage")).toString());
 

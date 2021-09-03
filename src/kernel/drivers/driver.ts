@@ -1,7 +1,10 @@
 
+// local
+import {Config} from "../../utils";
+
 interface Driver
 {
-    init(): Promise<void>;
+    init(config: Config): Promise<void>;
     destroy(): Promise<void>;
 }
 
